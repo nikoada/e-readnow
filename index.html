@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Reader App</title>
+    <style>
+        div {
+            margin-left: 1em;
+            margin-right: 1em;
+            border-bottom: 1px solid white;
+        }
+
+        /*         * {
+            border: 1px solid red;
+        } */
+
+        body {
+            background-color: black;
+            color: white;
+        }
+
+        p {
+            display: inline-block;
+            font-size: 3em;
+            margin-bottom: 0.5em;
+        }
+
+        .float-right {
+            float: right;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="cont1">
+        <p>Temperature</p>
+        <p id="rSign1" class="float-right">--</p>
+    </div>
+    <div id="cont2">
+        <p>Humidity</p>
+        <p id="rSign2" class="float-right">--</p>
+    </div>
+
+    <script>
+/*         var url_string = window.location.href
+        var url = new URL(url_string);
+        var city = url.searchParams.get("city");
+        console.log(city); */
+        var city = "Berlin";
+
+        var xhttp = new XMLHttpRequest();
+
+        function loadDoc() {
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    var response = this.responseText;
+                    var startTempIndex = response.indexOf("temp");
+                    var startHumIndex = response.indexOf("humidity");
+                    var temp = response.substr(startTempIndex + 6, 2);
+                    var hum = response.substr(startHumIndex + 10, 2);
+                    document.getElementById("rSign1").innerHTML = temp + "°C";
+                    document.getElementById("rSign2").innerHTML = hum + "%";
+                }
+            };
+            xhttp.open("GET", "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=metric&APPID=977f319182307ae0bfe209931ed637fa", true);
+            xhttp.send();
+        }
+
+        loadDoc();
+
+        setInterval(function () {
+            loadDoc()
+            console.log("Data was updated");
+        }, 60000)
+    </script>
+</body>
+
+</html>
