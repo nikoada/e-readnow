@@ -59,9 +59,9 @@
                     var response = this.responseText;
                     var startTempIndex = response.indexOf("temp");
                     var startHumIndex = response.indexOf("humidity");
-                    var temp = response.substr(startTempIndex + 6, 2);
+                    var temp = response.substr(startTempIndex + 6, 6);
                     var hum = response.substr(startHumIndex + 10, 2);
-                    document.getElementById("rSign1").innerHTML = temp + "°C";
+                    document.getElementById("rSign1").innerHTML = temp.split(".")[0] + "°C";
                     document.getElementById("rSign2").innerHTML = hum + "%";
                 }
             };
